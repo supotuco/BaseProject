@@ -40,6 +40,9 @@ dependencies {
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
 
+    //gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
     //Mockito
     implementation 'org.mockito:mockito-core:2.23.0'
     testImplementation 'junit:junit:4.12'
