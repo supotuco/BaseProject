@@ -6,8 +6,6 @@ import androidx.appcompat.widget.AppCompatTextView
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var textView: AppCompatTextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
