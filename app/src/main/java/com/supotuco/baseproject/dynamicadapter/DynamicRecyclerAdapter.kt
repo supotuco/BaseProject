@@ -15,6 +15,7 @@ class DynamicRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
             val map = mutableMapOf<Int, (ViewGroup) -> BaseViewHolder<*>>()
 
             value.forEach { holderModel -> map[holderModel.type] = holderModel.viewHolderFactory() }
+            typeToFactory = map
             field = value
         }
 
@@ -27,8 +28,12 @@ class DynamicRecyclerAdapter : RecyclerView.Adapter<BaseViewHolder<*>>() {
         return holderModels.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return holderModels[position].type
+    }
+
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        holder.bind(holderModels[position])
+        holderModels[position].accept(holder)
     }
 
     override fun onViewRecycled(holder: BaseViewHolder<*>) {
