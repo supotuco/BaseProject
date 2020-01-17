@@ -3,9 +3,12 @@ package com.supotuco.baseproject.employeelistview
 import com.supotuco.baseproject.command.CommandHandler
 import com.supotuco.baseproject.employee.EmployeeQuery
 import com.supotuco.baseproject.employee.EmployeeServerData
+import com.supotuco.baseproject.employee.ValidatedEmployeeServerData
 import com.supotuco.baseproject.employeelistview.EmployeeListViewModel.*
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.SingleSubject
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -71,7 +74,7 @@ class EmployeeListViewModelTest {
         // When
 
         val actual = viewModel.viewState().test()
-        query.employeeStream.onNext(employeeData)
+        query.employeeStream.onSuccess(employeeData)
 
         // Then
 
@@ -88,9 +91,9 @@ class EmployeeListViewModelTest {
     }
 
     private class FakeEmployeeQuery : EmployeeQuery {
-        val employeeStream: BehaviorSubject<List<EmployeeServerData>> = BehaviorSubject.create()
+        val employeeStream: SingleSubject<List<ValidatedEmployeeServerData>> = SingleSubject.create()
 
-        override fun allEmployees(): Observable<List<EmployeeServerData>> {
+        override fun allEmployees(): Single<List<ValidatedEmployeeServerData>> {
             return employeeStream
         }
     }
@@ -121,8 +124,8 @@ class EmployeeListViewModelTest {
             photoUrlLarge: String? = null,
             team: String = "",
             type: EmployeeServerData.Type = EmployeeServerData.Type.FULL_TIME
-    ): EmployeeServerData {
-        return EmployeeServerData(
+    ): ValidatedEmployeeServerData {
+        return ValidatedEmployeeServerData(
                 uuid = uuid,
                 fullName =fullName,
                 phoneNumber = phoneNumber,

@@ -6,16 +6,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import com.supotuco.baseproject.R
 import com.supotuco.baseproject.dynamicadapter.BaseHolderModel
 import com.supotuco.baseproject.dynamicadapter.BaseHolderModelVisitor
 import com.supotuco.baseproject.dynamicadapter.BaseViewHolder
 import com.supotuco.baseproject.dynamicadapter.LayoutResource
 import com.supotuco.baseproject.employee.EmployeeServerData
+import com.supotuco.baseproject.employee.ValidatedEmployeeServerData
 
 class EmployeeItemHM(
-        private val data: EmployeeServerData,
-        private val onItemClicked: (EmployeeServerData) -> Unit
+        private val data: ValidatedEmployeeServerData,
+        private val onItemClicked: (ValidatedEmployeeServerData) -> Unit
 ) : BaseHolderModel {
 
     override val layout: LayoutResource
@@ -23,6 +26,9 @@ class EmployeeItemHM(
 
     val nameViewText: String
         get() = data.fullName
+
+    val profileUrl: String?
+        get() = data.photoUrlSmall
 
     override fun viewHolderFactory(): (ViewGroup) -> BaseViewHolder<*> {
         return { viewGroup -> EmployeeItemVH(viewGroup.inflate(layout)) }
@@ -58,6 +64,10 @@ class EmployeeItemVH(view: View) : BaseViewHolder<EmployeeItemHM>(view), Employe
     override fun visit(employeeItemHM: EmployeeItemHM) {
         itemView.setOnClickListener { employeeItemHM.itemClicked() }
         nameView.text = employeeItemHM.nameViewText
+
+        Glide.with(profilePhotoView)
+                .load(employeeItemHM.profileUrl)
+                .into(profilePhotoView)
 
     }
 

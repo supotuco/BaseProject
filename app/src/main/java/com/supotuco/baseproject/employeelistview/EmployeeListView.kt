@@ -15,6 +15,7 @@ import com.supotuco.baseproject.dynamicadapter.BaseHolderModel
 import com.supotuco.baseproject.dynamicadapter.DynamicRecyclerAdapter
 import com.supotuco.baseproject.employee.EmployeeQuery
 import com.supotuco.baseproject.employee.EmployeeServerData
+import com.supotuco.baseproject.employee.ValidatedEmployeeServerData
 import com.supotuco.baseproject.employeeview.EmployeeItemHM
 import com.supotuco.baseproject.logging.LoggingService
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -89,7 +90,7 @@ class EmployeeListView: Fragment() {
                 .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
     }
 
-    private fun createEmployeeItem(data: EmployeeServerData): BaseHolderModel {
+    private fun createEmployeeItem(data: ValidatedEmployeeServerData): BaseHolderModel {
         return EmployeeItemHM(data) { viewModel.selectEmployee(data.uuid) }
     }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.supotuco.baseproject.command.CommandHandler
 import com.supotuco.baseproject.employee.EmployeeQuery
 import com.supotuco.baseproject.employee.EmployeeServerData
+import com.supotuco.baseproject.employee.ValidatedEmployeeServerData
 import io.reactivex.Observable
 
 
@@ -14,12 +15,12 @@ class EmployeeListViewModel(
 
     interface ViewState {
         val isLoadingSpinnerVisible: Boolean
-        val listData: List<EmployeeServerData>
+        val listData: List<ValidatedEmployeeServerData>
     }
 
     internal data class FlatViewState(
             override val isLoadingSpinnerVisible: Boolean,
-            override val listData: List<EmployeeServerData>
+            override val listData: List<ValidatedEmployeeServerData>
     ) : ViewState
 
 
@@ -31,6 +32,7 @@ class EmployeeListViewModel(
                             listData = listData
                     )
                 }
+                .toObservable()
                 .startWith(
                         FlatViewState(
                                 isLoadingSpinnerVisible = true,

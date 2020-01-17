@@ -1,6 +1,7 @@
 package com.supotuco.baseproject.employeeview
 
 import com.supotuco.baseproject.employee.EmployeeServerData
+import com.supotuco.baseproject.employee.ValidatedEmployeeServerData
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -140,8 +141,8 @@ class EmployeeItemHMTest {
             photoUrlLarge: String? = null,
             team: String = "",
             type: EmployeeServerData.Type = EmployeeServerData.Type.FULL_TIME
-    ): EmployeeServerData {
-        return EmployeeServerData(
+    ): ValidatedEmployeeServerData {
+        return ValidatedEmployeeServerData(
                 uuid = uuid,
                 fullName = fullName,
                 phoneNumber = phoneNumber,
